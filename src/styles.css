@@ -5,6 +5,14 @@ app-root {
   overflow: hidden;
 }
 
-.back{
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 15px solid black;
+  margin: 5px;
   cursor: pointer;
+
 }

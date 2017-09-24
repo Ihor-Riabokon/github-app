@@ -1,6 +1,7 @@
 <div [@slideInOutAnimation]>
   <md-card>
-    <md-card-title> <a class="back" (click)="back()"><- Back</a> Profile</md-card-title>
+    <div class="arrow-left" (click)="back()"></div><br>
+    <md-card-title>Profile</md-card-title>
     <img [src]="'https://avatars0.githubusercontent.com/u/'+user_id+'?v=4&size=100'" class="user_pic"/>
     <div>
       Name: {{user.name}} <br>

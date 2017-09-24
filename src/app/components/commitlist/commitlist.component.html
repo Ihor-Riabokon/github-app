@@ -1,6 +1,7 @@
 <div [@slideInOutAnimation]>
   <md-card>
-    <md-card-title> <a class="back" (click)="back()"><- Back</a>  Repo info</md-card-title>
+    <div class="arrow-left" (click)="back()"></div><br>
+    <md-card-title>Repo info</md-card-title>
     <div>
       Link to github: {{repo.html_url}} <br>
       Description: {{repo.description || 'not existing'}}

@@ -1,18 +1,33 @@
-<div>
-  <img [src]="'https://avatars0.githubusercontent.com/u/'+user.id+'?v=4&size=100'" />
+<div [@slideInOutAnimation]>
+  <md-card>
+    <md-card-title> <a class="back" (click)="back()"><- Back</a> Profile</md-card-title>
+    <img [src]="'https://avatars0.githubusercontent.com/u/'+user_id+'?v=4&size=100'" class="user_pic"/>
+    <div>
+      Name: {{user.name}} <br>
+      Email: {{user.email || 'not existing'}}
+    </div>
+  </md-card>
+  <md-card>
+    <md-card-title>Repositories</md-card-title>
+    <md-table #table [dataSource]="dataSource">
+      <!-- ID Column -->
+      <ng-container mdColumnDef="id">
+        <md-header-cell *mdHeaderCellDef>#ID</md-header-cell>
+        <md-cell *mdCellDef="let row"> {{row.id}}</md-cell>
+      </ng-container>
+
+      <ng-container mdColumnDef="full_name">
+        <md-header-cell *mdHeaderCellDef>Name</md-header-cell>
+        <md-cell *mdCellDef="let row"><a [routerLink]="['/commitlist', user_id, row.name]">{{row.name}}</a></md-cell>
+      </ng-container>
+
+      <ng-container mdColumnDef="commits">
+        <md-header-cell *mdHeaderCellDef>Repo Info</md-header-cell>
+        <md-cell *mdCellDef="let row"><a [routerLink]="['/commitlist', user_id, row.name]"> Commit list</a></md-cell>
+      </ng-container>
+
+      <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+      <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+  </md-card>
 </div>
-<md-table #table [dataSource]="dataSource">
-  <!-- ID Column -->
-  <ng-container mdColumnDef="id">
-    <md-header-cell *mdHeaderCellDef> id </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
-  </ng-container>
-
-  <ng-container mdColumnDef="full_name">
-    <md-header-cell *mdHeaderCellDef> full_name </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.full_name}} </md-cell>
-  </ng-container>
-
-  <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-  <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-</md-table>

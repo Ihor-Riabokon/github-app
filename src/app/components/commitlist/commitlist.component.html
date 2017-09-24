@@ -1,3 +1,27 @@
-<p>
-  commitlist works!
-</p>
+<div [@slideInOutAnimation]>
+  <md-card>
+    <md-card-title> <a class="back" (click)="back()"><- Back</a>  Repo info</md-card-title>
+    <div>
+      Link to github: {{repo.html_url}} <br>
+      Description: {{repo.description || 'not existing'}}
+    </div>
+  </md-card>
+  <md-card>
+    <md-card-title>Repositories</md-card-title>
+    <md-table #table [dataSource]="dataSource">
+      <!-- ID Column -->
+      <ng-container mdColumnDef="id">
+        <md-header-cell *mdHeaderCellDef> id</md-header-cell>
+        <md-cell *mdCellDef="let row" > {{row.sha}}</md-cell>
+      </ng-container>
+
+      <ng-container mdColumnDef="full_name">
+        <md-header-cell *mdHeaderCellDef> Message</md-header-cell>
+        <md-cell *mdCellDef="let row"> {{row.commit.message}}</md-cell>
+      </ng-container>
+
+      <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+      <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+  </md-card>
+</div>

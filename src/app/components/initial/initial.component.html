@@ -1,22 +1,23 @@
-<div class="example-container mat-elevation-z8">
-    <md-table #table [dataSource]="dataSource">
-
-        <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-
-        <!-- ID Column -->
-        <ng-container mdColumnDef="id">
-            <md-header-cell *mdHeaderCellDef> id </md-header-cell>
-            <md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container mdColumnDef="userName">
-            <md-header-cell *mdHeaderCellDef> login </md-header-cell>
-          <md-cell *mdCellDef="let row"> <a [routerLink]="['/userinfo', row.id]"><img src={{row.preview}} /> <span> {{row.login}} </span> </a> </md-cell>
-        </ng-container>
-
-        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-        <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-    </md-table>
-</div>
+<md-card [@slideInOutAnimation]>
+  <md-card-title>Users</md-card-title>
+  <md-table #table [dataSource]="dataSource">
+    <ng-container mdColumnDef="id">
+      <md-header-cell *mdHeaderCellDef> #ID</md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.id}}</md-cell>
+    </ng-container>
+    <ng-container mdColumnDef="avatar">
+      <md-header-cell *mdHeaderCellDef>Avatar</md-header-cell>
+      <md-cell *mdCellDef="let row"><img src={{row.preview}}/> </md-cell>
+    </ng-container>
+    <ng-container mdColumnDef="userName">
+      <md-header-cell *mdHeaderCellDef> Login</md-header-cell>
+      <md-cell *mdCellDef="let row"><a [routerLink]="['/userinfo', row.id]">{{row.login}}</a></md-cell>
+    </ng-container>
+    <ng-container mdColumnDef="profile">
+      <md-header-cell *mdHeaderCellDef> Github Profile</md-header-cell>
+      <md-cell *mdCellDef="let row"><a href="{{row.html_url}}"> Profile</a></md-cell>
+    </ng-container>
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+  </md-table>
+</md-card>

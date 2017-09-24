@@ -1,42 +1,41 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import GitHub from '../../services/github';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import slideInOutAnimation from '../../animation/slideout';
+import {DataSource} from '@angular/cdk/collections';
+import {Observable} from 'rxjs/Rx';
+import { Http, Response } from '@angular/http';
 
 @Component({
   selector: 'app-userinfo',
   templateUrl: './userinfo.component.html',
-  styleUrls: ['./userinfo.component.css']
+  styleUrls: ['./userinfo.component.css'],
+  animations: [slideInOutAnimation]
 })
 export default class UserinfoComponent implements OnInit, OnDestroy {
   user_id: number;
   private sub: any;
   private user: any = {};
-  private dataSource = {
-    connect() {},
-    disconnect() {}
-  };
-  displayedColumns = ['id', 'full_name'];
+  private dataSource: any;
 
-  constructor(private route: ActivatedRoute, public gitHub: GitHub) { }
+  displayedColumns = ['id', 'full_name', 'commits'];
+
+  constructor(private route: ActivatedRoute, private http: Http) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.user_id = +params['id'];
-      const git = this.gitHub;
-      this.gitHub.getUsersList(this.user_id).subscribe(user => {
-        console.log(git);
-        this.user = user;
-        this.dataSource = {
-          connect() {
-            console.log(git.getRepoList(user.repos_url));
-            return git.getRepoList(user.repos_url);
-          },
-          disconnect() {}
-        };
-      });
-
-      // this.dataSource = new ExampleDataSource(data);
-        // this.gitHub.getUserInfo();
+      this.http.get(`https://api.github.com/users/${this.user_id}`)
+        .map((res:Response) => res.json())
+        .map(user => {
+          this.user = user;
+          console.log(user.repos_url)
+          this.dataSource = new EDataSource(
+            this.http.get(user.repos_url)
+              .map(res => res.json())
+              .catch((error:any) => Observable.throw(error || 'Server error'))
+          );
+        })
+        .catch((error:any) => Observable.throw(error || 'Server error')).subscribe();
     });
   }
 
@@ -44,4 +43,20 @@ export default class UserinfoComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  back() {
+    window.history.back();
+  }
+
+}
+
+class EDataSource extends DataSource<any> {
+  constructor(private _exampleDatabase: any) {
+    super();
+  }
+
+  connect() {
+    return this._exampleDatabase;
+  }
+
+  disconnect() { }
 }

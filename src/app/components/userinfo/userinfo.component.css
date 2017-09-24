@@ -1,0 +1,11 @@
+.user_pic {
+  float:left;
+  margin-right: 10px;
+}
+
+md-card{
+  overflow: auto;
+  margin: 10px;
+  padding: 5px;
+
+}

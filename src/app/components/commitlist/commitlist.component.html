@@ -8,11 +8,11 @@
     </div>
   </md-card>
   <md-card>
-    <md-card-title>Repositories</md-card-title>
+    <md-card-title>Commits</md-card-title>
     <md-table #table [dataSource]="dataSource">
       <!-- ID Column -->
       <ng-container mdColumnDef="id">
-        <md-header-cell *mdHeaderCellDef> id</md-header-cell>
+        <md-header-cell *mdHeaderCellDef>#ID</md-header-cell>
         <md-cell *mdCellDef="let row" > {{row.sha}}</md-cell>
       </ng-container>
 
